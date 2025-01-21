@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PageContainer = styled.div`
@@ -184,17 +184,22 @@ function InsumoList({
   const [activeTab, setActiveTab] = useState("description");
   const [showAddedModal, setShowAddedModal] = useState(false);
   const [showFullImage, setShowFullImage] = useState(null); // Controla la imagen ampliada
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const fetchInsumos = async () => {
-      const querySnapshot = await getDocs(collection(db, "insumos"));
-      const items = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setInsumos(items);
-    };
-    fetchInsumos();
+    const unsubscribe = onSnapshot(
+      collection(db, "insumos"),
+      (querySnapshot) => {
+        const items = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setInsumos(items);
+      }
+    );
+
+    // Cleanup: Cancelar la suscripción cuando el componente se desmonte
+    return () => unsubscribe();
   }, []);
 
   const addToCart = (product) => {
@@ -203,7 +208,7 @@ function InsumoList({
       setShowAddedModal(true);
       setTimeout(() => setShowAddedModal(false), 4000);
     }
-  };  
+  };
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("es-AR", {
@@ -213,9 +218,32 @@ function InsumoList({
     }).format(price);
   };
 
+  // Filtrar productos según el término de búsqueda
+  const filteredInsumos = insumos.filter(
+    (insumo) =>
+      insumo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      insumo.sku.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <PageContainer>
       <Title>Insumos Médicos</Title>
+
+      {/* Campo de búsqueda */}
+      <input
+        type="text"
+        placeholder="Buscar por nombre o SKU"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{
+          width: "50%",
+          padding: "10px",
+          margin: "20px auto",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          fontSize: "1rem",
+        }}
+      />
 
       {/* Modal para agregar al carrito */}
       <AnimatePresence>
@@ -257,7 +285,7 @@ function InsumoList({
       </AnimatePresence>
 
       <GridContainer>
-        {insumos.map((insumo) => (
+        {filteredInsumos.map((insumo) => (
           <Card
             key={insumo.id}
             whileHover={{

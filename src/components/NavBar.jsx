@@ -129,7 +129,7 @@ const StyledNavbar = styled(Navbar)`
   background-color: #343a40;
   .contenedorNav {
     a {
-        margin-right: auto;
+      margin-right: auto;
     }
     margin: 0px;
     width: 100%;
@@ -207,9 +207,9 @@ function NavBar({
                 Admin
               </Nav.Link>
               <Nav.Link as={Link} to="/ProductList">
-                Listado
+                List.
               </Nav.Link>
-              <Button onClick={handleLogoutClick}>Salir</Button>
+              <Nav.Link onClick={handleLogoutClick}>Salir</Nav.Link>
             </>
           ) : (
             <Nav.Link as={Link} to="/login">
@@ -222,7 +222,7 @@ function NavBar({
           className="ms-3 btn-cart"
           onClick={() => setIsCartOpen(!isCartOpen)}
         >
-          🛒 Carrito
+          🛒Carrito
         </Button>
       </div>
       <CartDropdown $isOpen={isCartOpen}>

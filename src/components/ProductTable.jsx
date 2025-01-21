@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { db } from "../firebase";
-import { collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Container = styled.div`
@@ -131,6 +137,35 @@ const ModalContent = styled(motion.div)`
   }
 `;
 
+const FormField = styled.div`
+  position: relative;
+  margin-bottom: 20px;
+
+  label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: white;
+    padding: 0 5px;
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+  }
+`;
+
 function ProductTable() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -210,14 +245,22 @@ function ProductTable() {
                 <td>{product.sku}</td>
                 <td>${Math.round(product.price).toLocaleString("es-AR")}</td>
                 <td>
-                  <button onClick={() => {
-                    setSelectedProduct(product);
-                    setModalType("edit");
-                  }}>Editar</button>
-                  <button onClick={() => {
-                    setSelectedProduct(product);
-                    setModalType("delete");
-                  }}>Eliminar</button>
+                  <button
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      setModalType("edit");
+                    }}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      setModalType("delete");
+                    }}
+                  >
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             ))}
@@ -268,48 +311,63 @@ function ProductTable() {
                   <button onClick={() => handleDelete(selectedProduct.id)}>
                     Confirmar
                   </button>
-                  <button onClick={() => setSelectedProduct(null)}>Cancelar</button>
+                  <button onClick={() => setSelectedProduct(null)}>
+                    Cancelar
+                  </button>
                 </>
               ) : (
                 <>
                   <h2>Editar Producto</h2>
-                  <input
-                    type="text"
-                    placeholder="Nombre"
-                    value={selectedProduct.title}
-                    onChange={(e) =>
-                      setSelectedProduct((prev) => ({
-                        ...prev,
-                        title: e.target.value,
-                      }))
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="SKU"
-                    value={selectedProduct.sku}
-                    onChange={(e) =>
-                      setSelectedProduct((prev) => ({
-                        ...prev,
-                        sku: e.target.value,
-                      }))
-                    }
-                  />
-                  <input
-                    type="number"
-                    placeholder="Precio"
-                    value={selectedProduct.price}
-                    onChange={(e) =>
-                      setSelectedProduct((prev) => ({
-                        ...prev,
-                        price: e.target.value,
-                      }))
-                    }
-                  />
+                  <FormField>
+                    <label>Nombre</label>
+                    <input
+                      type="text"
+                      placeholder="Nombre"
+                      value={selectedProduct.title}
+                      onChange={(e) =>
+                        setSelectedProduct((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
+                    />
+                  </FormField>
+
+                  <FormField>
+                    <label>SKU</label>
+                    <input
+                      type="text"
+                      placeholder="SKU"
+                      value={selectedProduct.sku}
+                      onChange={(e) =>
+                        setSelectedProduct((prev) => ({
+                          ...prev,
+                          sku: e.target.value,
+                        }))
+                      }
+                    />
+                  </FormField>
+
+                  <FormField>
+                    <label>Precio</label>
+                    <input
+                      type="number"
+                      placeholder="Precio"
+                      value={selectedProduct.price}
+                      onChange={(e) =>
+                        setSelectedProduct((prev) => ({
+                          ...prev,
+                          price: e.target.value,
+                        }))
+                      }
+                    />
+                  </FormField>
                   <button onClick={() => handleEdit(selectedProduct)}>
                     Guardar
                   </button>
-                  <button onClick={() => setSelectedProduct(null)}>Cancelar</button>
+                  <button onClick={() => setSelectedProduct(null)}>
+                    Cancelar
+                  </button>
                 </>
               )}
             </ModalContent>
