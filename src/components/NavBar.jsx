@@ -198,7 +198,7 @@ function NavBar({
     <StyledNavbar expand="lg" variant="dark" $cartCount={cart.length}>
       <div className="contenedorNav">
         <Navbar.Brand as={Link} to="/">
-          Productos
+          Inicio
         </Navbar.Brand>
         <StyledNav>
           {user ? (
