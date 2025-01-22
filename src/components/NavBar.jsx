@@ -113,6 +113,8 @@ const CartDropdown = styled.div`
     border: none;
     border-radius: 0.25rem;
     padding: 0.5rem;
+    position: sticky;
+    bottom: 0;
 
     &:hover {
       background: #218838;
