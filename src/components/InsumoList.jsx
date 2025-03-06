@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { db } from "../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
+import BannerCarousel from "./BannerCarousel";
 
 const PageContainer = styled.div`
-  margin: 80px 20px 100px; /* Márgenes para el navbar y footer */
+  margin: 3px 20px 100px; /* Márgenes para el navbar y footer */
   text-align: center;
 `;
 
@@ -219,7 +220,10 @@ function InsumoList({
   );
 
   return (
+    <>
+    <BannerCarousel/>
     <PageContainer>
+      
       <h1>Nuestros Productos</h1>
 
       {/* Campo de búsqueda */}
@@ -355,6 +359,7 @@ function InsumoList({
         )}
       </AnimatePresence>
     </PageContainer>
+    </>
   );
 }
 
