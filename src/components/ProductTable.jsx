@@ -52,7 +52,7 @@ const StyledTable = styled.table`
   }
 
   tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: #5696e0;
   }
 `;
 

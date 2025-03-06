@@ -9,13 +9,6 @@ const PageContainer = styled.div`
   text-align: center;
 `;
 
-const Title = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #343a40;
-`;
-
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -227,7 +220,7 @@ function InsumoList({
 
   return (
     <PageContainer>
-      <Title>Insumos Médicos</Title>
+      <h1>Nuestros Productos</h1>
 
       {/* Campo de búsqueda */}
       <input
@@ -238,7 +231,7 @@ function InsumoList({
         style={{
           width: "50%",
           padding: "10px",
-          margin: "20px auto",
+          margin: "10px auto",
           border: "1px solid #ccc",
           borderRadius: "5px",
           fontSize: "1rem",

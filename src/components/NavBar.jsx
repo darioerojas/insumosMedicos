@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { Navbar, Nav, Button } from "react-bootstrap";
+import { IoHardwareChipSharp } from "react-icons/io5";
 
 // Animación para el carrito desplegable
 const fadeIn = keyframes`
@@ -122,16 +123,29 @@ const CartDropdown = styled.div`
   }
 `;
 
+const IconContainer = styled.span`
+  font-size: 1.8rem; /* Tamaño similar a la "N" */
+  color: #00f2ff; /* Azul neón estilo tech */
+  display: flex;
+  align-items: center;
+  margin-right: 8px; /* Espaciado con el texto */
+`;
+
 const StyledNavbar = styled(Navbar)`
   padding: 5px 15px 5px 15px;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1030;
-  background-color: #343a40;
+  background-color: #121212;
   .contenedorNav {
     a {
+      display: flex;
       margin-right: auto;
+    }
+    label {
+      cursor: pointer;
+      text-shadow: 0 0 5px #00f2ff, 0 0 10px #00f2ff;
     }
     margin: 0px;
     width: 100%;
@@ -200,7 +214,10 @@ function NavBar({
     <StyledNavbar expand="lg" variant="dark" $cartCount={cart.length}>
       <div className="contenedorNav">
         <Navbar.Brand as={Link} to="/">
-          Inicio
+          <IconContainer>
+            <IoHardwareChipSharp/>
+          </IconContainer>
+          <label>NovaChip</label>
         </Navbar.Brand>
         <StyledNav>
           {user ? (

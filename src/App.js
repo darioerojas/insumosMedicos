@@ -23,7 +23,7 @@ function App() {
   };
 
   const sendCartToWhatsApp = () => {
-    const phoneNumber = "+542613743475"; // Número al que se enviará el mensaje "+542613743475"
+    const phoneNumber = "+542616862323"; // Número al que se enviará el mensaje
     const message = cart
       .map(
         (item) =>
